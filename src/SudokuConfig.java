@@ -46,7 +46,7 @@ public class SudokuConfig implements Configuration{
     public Collection<Configuration> getSuccessors(){
         ArrayList<Configuration> ar = new ArrayList<>();
         boolean flag=false;
-        for (int i=0;i<9;i++){
+        for (int i=this.row;i<9;i++){
             if(flag){
                 break;
             }
@@ -58,17 +58,17 @@ public class SudokuConfig implements Configuration{
                     for(int k=1;k<10;k++){
                         SudokuConfig SC = new SudokuConfig(this);
                         SC.grid[i][j]=k;
-                        System.out.println("+++++++++++++++++++++++++++++");
-                        if(SC.col==8){
+                        //System.out.println("+++++++++++++++++++++++++++++");
+                        if(j==8){
                             SC.col=0;
                             SC.row = i+1;
                         }
                         else{
                             SC.col=j+1;
                         }
-                        System.out.println("row: "+i+"    col: "+j+"    element: "+k);
-                        System.out.println(SC);
-                        System.out.println(SC.isValid());
+                        //System.out.println("row: "+i+"    col: "+j+"    element: "+k);
+                        //System.out.println(SC);
+                        //System.out.println(SC.isValid());
                         ar.add(SC);
                     }
                     flag=true;
@@ -100,7 +100,7 @@ public class SudokuConfig implements Configuration{
         //that all values in this column are different
         for (int i=0;i<9;i++){
             if (this.grid[i][c]==n && i!=r){
-                System.out.println("Checkpoint 1");
+                //System.out.println("Checkpoint 1");
                 return false;
             }
         }
@@ -109,7 +109,7 @@ public class SudokuConfig implements Configuration{
         for (int i=0;i<9;i++){
             //System.out.println(grid[r][i]+ " n: "+n+"   i: "+i+"   c: "+c);
             if (this.grid[r][i]==n && i!=c){
-                System.out.println("Checkpoint 2");
+                //System.out.println("Checkpoint 2");
                 return false;
             }
         }
@@ -143,7 +143,7 @@ public class SudokuConfig implements Configuration{
             for(int j=col1;j<=col2;j++){
                 //System.out.println("check 3: "+this.grid[i][j]+"  n: "+n+"  row: "+r+"  col: "+c+"  i: "+i+"  j: "+j);
                 if(this.grid[i][j]==n && i!=r && j!=c){
-                    System.out.println("Checkpoint 3");
+                    //System.out.println("Checkpoint 3");
                     return false;
                 }
             }
