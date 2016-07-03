@@ -32,9 +32,6 @@ public interface Configuration {
      */
     public boolean isGoal();
 
-    /**
-     * calls toString
-     */
-    public void display();
+
 
 }
