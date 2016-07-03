@@ -35,54 +35,151 @@ public class SudokuConfig implements Configuration{
         int[][] ar = new int[9][9];
         for (int i=0;i<9;i++) {
             for (int j = 0; j < 9; j++) {
-                ar[i][j]=this.grid[i][j];
+                ar[i][j]=other.grid[i][j];
             }
         }
         this.grid = ar;
-        this.row=other.row;
-        this.col=other.col;
+        if(other.col==8){
+            this.col=0;
+            this.row = other.row+1;
+        }
+        else{
+            this.col = other.col+1;
+        }
     }
 
     public Collection<Configuration> getSuccessors(){
         ArrayList<Configuration> ar = new ArrayList<>();
         boolean flag=false;
-        for (int i=1;i<9;i++){
+        for (int i=0;i<9;i++){
+            if(flag){
+                break;
+            }
             for(int j=0;j<9;j++){
+                if(flag){
+                    break;
+                }
                 if(this.grid[i][j]==0){
                     for(int k=1;k<10;k++){
                         SudokuConfig SC = new SudokuConfig(this);
                         SC.grid[i][j]=k;
+                        System.out.println("+++++++++++++++++++++++++++++");
+                        System.out.println("row: "+i+"    col: "+j+"    element: "+k);
+                        System.out.println(SC);
+                        System.out.println(SC.isValid());
                         ar.add(SC);
-                        flag=true;
-                        break;
                     }
-                }
-                if(flag){
+                    flag=true;
                     break;
                 }
-            }
-            if(flag){
-                break;
             }
         }
         return ar;
     }
 
     public boolean isValid(){
-        int r = this.row;
-        int c = this.col;
+        int r = 0;
+        int c = 0;
+        if(this.col==0){
+            c=8;
+            r = this.row-1;
+        }
+        else{
+            c = this.col-1;
+        }
+
+        int n=this.grid[r][c];
+
+        //check all values in the current column, to make sure
+        //that all values in this column are different
+        for (int i=0;i<9;i++){
+            if (this.grid[i][c]==n && i!=r){
+                System.out.println("Checkpoint 1");
+                return false;
+            }
+        }
+        //check all values in the current row, to make sure
+        //that all values in this row are different
+        for (int i=0;i<9;i++){
+            if (this.grid[r][i]==n && i != c){
+                System.out.println("Checkpoint 2");
+                return false;
+            }
+        }
+
+        //check all values in current 3x3 region
+        int row1=0;
+        int row2=0;
+        if (r>=0 && r <=2){
+            row1 = 0; row2 = 2;
+        }
+        else if (r>=3 && r <=5){
+            row1 = 3; row2 = 5;
+        }
+        else{
+            row1 = 6; row2 = 8;
+        }
+
+        int col1=0;
+        int col2=0;
+        if (r>=0 && r <=2){
+            col1 = 0; col2 = 2;
+        }
+        else if ((r>=0 && r <=2)){
+            col1 = 3; col2 = 5;
+        }
+        else{
+            col1 = 6; col2 = 8;
+        }
+
+        for(int i=row1;i<=row2;i++){
+            for(int j=col1;j<=col2;j++){
+                //System.out.println("check 3: "+this.grid[i][j]);
+                if(this.grid[i][j]==n && i!=r && j!=c){
+                    System.out.println("Checkpoint 3");
+                    return false;
+                }
+            }
+        }
+
+
         return true;
     }
 
     public boolean isGoal(){
-        for (int i=0;i<10;i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0;i < 9;i++) {
+            for (int j = 0; j < 9; j++) {
                 if (grid[i][j]==0){
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    public String toString(){
+        String st=" -----------------------\n";
+        for (int i=0;i<9;i++){
+            st+="| ";
+            for(int j=0;j<9;j++){
+                if((j+1)%3==0){
+                    st += this.grid[i][j] + " | ";
+                }
+                else {
+                    st += this.grid[i][j] + " ";
+                }
+            }
+            if((i+1)%3==0 && i!=8){
+                st+="\n|-------+-------+-------|\n";
+            }
+            else if((i+1)%3==0){
+                st+="\n -----------------------\n";
+            }
+            else {
+                st += "\n";
+            }
+        }
+        return st;
     }
 
 

@@ -10,6 +10,8 @@ public class SudokuSolver {
         // construct the initial configuration from the file
         Configuration init = new SudokuConfig(args[0]);
 
+        System.out.println(init);
+
         Backtracker bt = new Backtracker(false);
 
         // start the clock
@@ -25,6 +27,7 @@ public class SudokuSolver {
         // indicate whether there was a solution, or not
         if (sol.isPresent()) {
             System.out.println("SOLVED");
+            System.out.println(sol.get());
         } else {
             System.out.println("No solution!");
         }
