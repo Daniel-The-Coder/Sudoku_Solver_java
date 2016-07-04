@@ -94,7 +94,7 @@ public class SudokuConfig implements Configuration{
 //        c=this.col;
 
         int n=this.grid[r][c];
-        System.out.println("in isValid(): "+r+" "+c);
+        //System.out.println("in isValid(): "+r+" "+c);
 
         //check all values in the current column, to make sure
         //that all values in this column are different
