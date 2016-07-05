@@ -31,5 +31,11 @@ public class SudokuSolver {
         } else {
             System.out.println("No solution!");
         }
+//        int[][] x = {{1,2},{3,4}};
+//        for(int i=0;i<2;i++){
+//            for (int j=0;j<2;j++){
+//                System.out.println("i: "+i+"  j: "+j+"  element: "+x[i][j]);
+//            }
+//        }
     }
 }
